@@ -1,3 +1,4 @@
+#!/usr/local/bin/python
 import json
 import time
 from getpass import getpass
@@ -81,8 +82,16 @@ def get_deleted_films(data):
 
 def log(data1, data2):
     t = datetime.datetime.now()
-    msg = "{} | Total: {} | New: {}"
+    msg = "{} | Total: {} | New: {}".format(t, len(data1), len(data2))
     print(msg.format(t, len(data1), len(data2)))
+    try:
+        f = open("script.log", "a+")
+        f.write(msg + "\n")
+        f.close()
+    except IOError as io_e:
+        print("An error had occured: " + str(io_e))
+    except Exception as e:
+        print("An unexpected error had occured: " + str(e))
 
 
 def get_data():
