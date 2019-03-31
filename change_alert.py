@@ -40,8 +40,8 @@ def main():
     try:
         srv = setup_server(username, password, smtp, port, target_mail)
         track_data(srv)
-    except:
-        print("!!Error!!")
+    except Exception as e :
+        print("!!Error!! - " + str(e))
 
 
 def track_data(srv):
@@ -54,10 +54,9 @@ def track_data(srv):
             save_films(data)
         deleted = get_deleted_films(data)
         if len(deleted) > 0:
-            print("Deleted films:")
+            log_delete(deleted)
             for film in deleted:
                 total_films.remove(film)
-                print("\t-" + film)
         time.sleep(delay)
 
 
@@ -78,6 +77,23 @@ def get_deleted_films(data):
         if film not in data:
             deleted_films.append(film)
     return deleted_films
+
+
+def log_delete(data):
+    msg = "deleted - \n"
+    for film in data:
+        msg = msg + film + "\n"
+    print(msg)
+    msg_bytes = msg.encode(encoding="utf-8")
+    try:
+        f = open("script.log", "ab+")
+        f.write(msg_bytes)
+        f.close()
+    except IOError as io_e:
+        print("Error logging deleted file - " + str(io_e))
+    except Exception as e:
+        print("Unexcpected Error - " + str(e))
+
 
 
 def log(data1, data2):
