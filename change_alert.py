@@ -57,6 +57,7 @@ def track_data(srv):
             log_delete(deleted)
             for film in deleted:
                 total_films.remove(film)
+            save_films(data)
         time.sleep(delay)
 
 
@@ -93,7 +94,6 @@ def log_delete(data):
         print("Error logging deleted file - " + str(io_e))
     except Exception as e:
         print("Unexcpected Error - " + str(e))
-
 
 
 def log(data1, data2):
@@ -167,6 +167,7 @@ def load_films():
 
 def save_films(data):
     try:
+        open(films_file_name,"w").close()
         f = open(films_file_name, "wb+")
         for line in data:
             byte_string = line + "\n"
