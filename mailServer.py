@@ -2,6 +2,8 @@ import smtplib
 
 
 class MailServer:
+    """ Simple SMTP server for sending a SIMPLE mail"""
+
     def __init__(self, username, password, smtp, port):
         self.username = username
         self.password = password
