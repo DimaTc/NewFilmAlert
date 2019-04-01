@@ -9,7 +9,7 @@ class MailServer:
         self.password = password
         self.smtp = smtp
         self.port = port
-        self.srv = self.setupServer()
+        # self.srv = self.setupServer()
 
     def set_target(self, target):
         self.target = target
@@ -21,6 +21,8 @@ class MailServer:
         return s
 
     def sendMessage(self, message):
+        print("Setting up server...")
+        self.srv = self.setupServer()
         print("Sending mail...")
         self.srv.sendmail(self.username, self.target,
                           message.encode(encoding="utf-8"))
